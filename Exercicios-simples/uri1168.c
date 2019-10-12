@@ -1,60 +1,50 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <math.h>
 
-int calculaQtd(char* val)
+int firstDigit(int n);
+int calculaQtd(unsigned long long int val)
 {
 	int soma = 0;
-	unsigned int i;
-	for (i = 0; i < strlen(val); i++)
-		switch(val[i])
-		{
-			case '1':
-				soma += 2;
-				break;
-			case '2':
-			case '3':
-			case '5':
-				soma += 5;
-				break;
-			case '4':
-				soma += 4;
-				break;
-			case '6':
-			case '9':
-			case '0':
-				soma += 6;
-				break;
-			case '7':
-				soma += 3;
-				break;
-			case '8':
-				soma += 7;
-				break;	
-		}
-	
+	int digits = floor (log10 (val)) + 1;
+	unsigned long int pow10 = 10;
+	for (int i = 0; i < digits; ++i){
+		int current = firstDigit((val % pow10));
+		if (current == 6 || current ==  9 || current == 0)
+			soma+= 6;
+		else if (current == 2 || current == 3 || current == 5)
+			soma+= 5;
+		else if ( current == 1 || current == 4)
+			soma+= current == 1 ? 2 : 4;
+		else if (current == 0)
+			soma+=6;
+		else
+			soma+= current == 7 ? 3 : 7;
+
+		pow10*=10;
+	}
 	return soma;
 }
+
+int firstDigit(int n) 
+{ 
+    while (n >= 10)  
+        n /= 10; 
+    return n; 
+} 
+
 
 int main()
 {
 	int n, i, leds;
-	char* valor;
-	unsigned long long int tam;
+	unsigned long long int valor;
 
-	tam = (int)pow(10, 100);
-
-	valor = malloc(tam * sizeof(char));
-	
 	scanf("%d", &n);
 
 	for (i = 0; i < n; ++i)
 	{
-		scanf("%s", valor);
+		scanf("%lld", &valor);
 		leds = calculaQtd(valor);
 		printf("%d leds\n", leds);
 	}
-
 	return 0;
 }

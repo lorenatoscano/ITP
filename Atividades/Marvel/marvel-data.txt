@@ -1,0 +1,6 @@
+Os Vingadores
+1 10 2019 1
+Hulk;Viuva Negra;Spider
+Galinha Pintadinha
+68 4 1986 0
+Galinha;Galo Carijó

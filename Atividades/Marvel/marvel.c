@@ -13,6 +13,7 @@ typedef struct
 } HQ;
 
 
+
 void carrega_base(HQ*);
 void adiciona(HQ*);
 void remove_hq(HQ*);
@@ -64,53 +65,69 @@ int main()
 void carrega_base(HQ quad[200])
 {
 	FILE* arq = fopen("marvel-data.txt", "r");
-	int i = 0, j = 0, k, l, tam, qtd;
-	char linha[1000];
-	char aux[200];
+	int i = 0, j = 0, k, l;
+	int tam, qtd, flag;
+	char linha[1000], tail[1000], aux[1000], str[100];
+	char* temp;
 
 	if (arq == NULL) printf("Base de dados vazia!\n");
 	else
 	{
 		printf("Carregando base de dados...\n");
-
-		//Le as informacoes do arquivo e armazena no vetor quad
-		while(fscanf(arq, "%[^\n]s", quad[i].nome) != EOF)
+		
+		//Le linha por linha ate o final
+		while(fgets(linha, 1000, arq) != NULL)
 		{
-			fscanf(arq, "%d %d %d %d\n", &quad[i].num, &quad[i].mes, &quad[i].ano, &quad[i].lido);
-			
-			//Guarda a linha com os personagens para retirar cada um
-			// fscanf(arq, "%[\n]s", linha);
-			// do
-			// {
-			// 	sscanf(linha, "%[^;]s", quad[i].pers[j]);
-			// 	j++;
-			// } while(sscanf(linha, "%s", aux) != '\0');
-			i++;
+			//Le o titulo
+			sscanf(linha, "%[^;]s", quad[i].nome);
 
+			//Guarda o resto numa string auxiliar
+			for(k=strlen(quad[i].nome), l = 0; linha[k] != '\0'; k++, l++)
+                tail[l] = linha[k];
+
+            tail[l] = '\0';
+
+            //Retira da auxiliar o restante das informacoes
+			sscanf(tail, "; %d; %d-%d; %d;\n", &quad[i].num, &quad[i].mes, &quad[i].ano, &quad[i].lido);
+
+			//Repete o processo pra guardar o resto da linha
+			for(k=18, l = 0; tail[k] != '\0'; k++, l++)
+                aux[l] = tail[k];
+            aux[l - 1] = '\0';
+
+			temp = strtok(aux, ",");
+			j = 0;
+			while(temp != NULL)
+			{
+				strcpy(quad[i].pers[j], temp);
+				j++;
+				temp = strtok(NULL, ",");
+			}
+			
+			i++;
 		}
+
+		fclose(arq);
+	}
+	tam = i;
+	//Imprime os dados apenas para verificacao
+	for(i = 0; i < tam; i++)
+	{
+		printf(">> Título da HQ %d: %s %d\n", i, quad[i].nome, quad[i].num);
+		printf(">> Data: %d/%d\n", quad[i].mes, quad[i].ano);
+		printf(">> Lido? %d\n", quad[i].lido);
+	
+		printf(">> Personagens:\n");
+
+		for (j = 0; j < qtd; j++)
+		{
+			printf("> %s\n", quad[i].pers[j]);
+		}
+		printf("\n");
 	}
 
-	tam = i;
-	qtd = j;
-
-	//Imprime os dados apenas para verificacao
-	// for(i = 0; i < tam; i++)
-	// {
-	// 	printf(">> Título da HQ %d: %s %d\n", i, quad[i].nome, quad[i].num);
-	// 	printf(">> Data: %d/%d\n", quad[i].mes, quad[i].ano);
-	// 	printf(">> Lido? %d\n\n", quad[i].lido);
-	
-	// 	// printf(">> Personagens:\n");
-
-	// 	// for (j = 0; j < qtd; j++)
-	// 	// {
-	// 	// 	printf("> %s\n", quad[i].pers[j]);
-	// 	// }
-	// 	// printf("\n");
-	// }
-
-	// getchar();
-	// getchar();
+	getchar();
+	getchar();
 }
 
 void adiciona(HQ quad[200])	
@@ -162,17 +179,68 @@ void adiciona(HQ quad[200])
 				scanf(" %[^\n]s", novo.pers[i]);
 
 			//Insere as informações no arquivo:
-			fprintf(arq, "%s\n", novo.nome);
-			fprintf(arq, "%d %d %d %d\n", novo.num, novo.mes, novo.ano, novo.lido);
+			fprintf(arq, "%s; ", novo.nome);
+			fprintf(arq, "%d; %d-%d; %d; ", novo.num, novo.mes, novo.ano, novo.lido);
 			for (i = 0; i < qtd; ++i)
 			{
-				fprintf(arq, "%s;", novo.pers[i]);
+				fprintf(arq, "%s,", novo.pers[i]);
 			}
 			fprintf(arq, "\n");
-
 		}
+
+		fclose(arq);
 	}
 	
+	getchar();
+	getchar();
+
+	system("clear");
+}
+
+void remove_hq(HQ quad[200])
+{
+	FILE* arq = fopen("marvel-data.txt", "r");
+	FILE* novo = fopen("marvel-tmp.txt", "w");
+
+	HQ del;
+	int i, ok = 0, aux, res;
+	char linha[1000];
+
+	if (arq == NULL || novo == NULL) printf("Erro na abertura do arquivo!\n");
+	else
+	{
+		carrega_base(quad);
+
+		printf("Digite as informações do quadrinho que deseja remover:\n\n");
+		printf("Título:\n");
+		scanf(" %[^\n]s", del.nome);
+		printf("Número:\n");
+		scanf("%d", &del.num);
+
+		//Verifica se o quadrinho está cadastrado
+		for (i = 0; i < 200; i++)
+		{
+			res = strcmp(del.nome, quad[i].nome);
+			if (res == 0)
+			{
+				if (quad[i].num == del.num)
+				{
+					aux = i;
+					ok = 1;
+					break;
+				}
+			}
+		}
+
+		if (ok == 0) printf("O quadrinho não foi encontrado\n");
+
+		//Copia linha por linha para o arquivo novo, exceto as do del
+
+
+		fclose(arq);
+        fclose(novo);
+	}
+
 	getchar();
 	getchar();
 

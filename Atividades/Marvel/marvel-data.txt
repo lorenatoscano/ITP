@@ -1,6 +1,3 @@
-Os Vingadores
-1 10 2019 1
-Galinha Pintadinha
-68 4 1986 0
-O Espetacular Homem Aranha
-56 2 1999 0
+Os Vingadores; 01; 10-2019; 1; Hulk,Thor,Viuva Negra,
+Galinha Pintadinha; 68; 04-1986; 0; Galinha pintadinha,Galo Carijó,
+O Espetacular Homem Aranha; 23; 12-2012; 1; Peter Parker,Mary Jane,Coringa,

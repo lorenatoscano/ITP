@@ -9,9 +9,9 @@ typedef struct
 	int num;
 	int mes, ano;
 	int lido;
+	int qtd;
 	char pers[50][100];
 } HQ;
-
 
 
 void carrega_base(HQ*);
@@ -49,7 +49,7 @@ int main()
 			case 1: carrega_base(quadrinhos); break;
 			case 2: adiciona(quadrinhos); break;
 			case 3: remove_hq(quadrinhos); break;
-			// case 4: busca(quadrinhos); break;
+			case 4: busca(quadrinhos); break;
 			// case 5: consulta(quadrinhos); break;
 			// case 6: marca_lido(quadrinhos); break;
 			case 7: break;
@@ -76,7 +76,7 @@ void carrega_base(HQ quad[200])
 	if (arq == NULL) printf("Base de dados vazia!\n");
 	else
 	{
-		printf("Carregando base de dados...\n");
+		printf("Carregando base de dados...\n\n");
 		
 		//Le linha por linha ate o final
 		while(fgets(linha, 1000, arq) != NULL)
@@ -91,10 +91,10 @@ void carrega_base(HQ quad[200])
             tail[l] = '\0';
 
             //Retira da auxiliar o restante das informacoes
-			sscanf(tail, "; %d; %d-%d; %d;\n", &quad[i].num, &quad[i].mes, &quad[i].ano, &quad[i].lido);
+			sscanf(tail, "; %d; %d-%d; %d; %d;", &quad[i].num, &quad[i].mes, &quad[i].ano, &quad[i].lido, &quad[i].qtd);
 
 			//Repete o processo pra guardar o resto da linha
-			for(k=18, l = 0; tail[k] != '\0'; k++, l++)
+			for(k=21, l = 0; tail[k] != '\0'; k++, l++)
                 aux[l] = tail[k];
             aux[l - 1] = '\0';
 
@@ -112,8 +112,8 @@ void carrega_base(HQ quad[200])
 
 		fclose(arq);
 	}
-	// tam = i;
-	// //Imprime os dados apenas para verificacao
+	//tam = i;
+	//Imprime os dados apenas para verificacao
 	// for(i = 0; i < tam; i++)
 	// {
 	// 	printf(">> Título da HQ %d: %s %d\n", i, quad[i].nome, quad[i].num);
@@ -122,11 +122,10 @@ void carrega_base(HQ quad[200])
 	
 	// 	printf(">> Personagens:\n");
 
-	// 	for (j = 0; j < qtd; j++)
+	// 	for (j = 0; j < quad[i].qtd; ++j)
 	// 	{
-	// 		printf("> %s\n", quad[i].pers[j]);
+	// 		printf("-%s\n", quad[i].pers[j]);
 	// 	}
-	// 	printf("\n");
 	// }
 
 	// getchar();
@@ -177,9 +176,9 @@ void adiciona(HQ quad[200])
 			novo.lido = 0;
 
 			printf("Quantos personagens deseja adicionar?\n");
-			scanf("%d", &qtd);
+			scanf("%d", &novo.qtd);
 			printf("Insira os personagens separados por enter:\n");
-			for (i = 0; i < qtd; ++i)
+			for (i = 0; i < novo.qtd; ++i)
 				scanf(" %[^\n]s", novo.pers[i]);
 
 			//Insere as informações no arquivo:
@@ -189,16 +188,16 @@ void adiciona(HQ quad[200])
 			if (novo.num < 10) 
 			{
 				if (novo.mes < 10)
-					fprintf(arq, "0%d; 0%d-%d; %d; ", novo.num, novo.mes, novo.ano, novo.lido);
+					fprintf(arq, "0%d; 0%d-%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
 				else	
-					fprintf(arq, "0%d; %d-%d; %d; ", novo.num, novo.mes, novo.ano, novo.lido);
+					fprintf(arq, "0%d; %d-%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
 			}
 			else if (novo.mes < 10) 
-				fprintf(arq, "%d; 0%d-%d; %d; ", novo.num, novo.mes, novo.ano, novo.lido);
+				fprintf(arq, "%d; 0%d-%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
 			else 
-				fprintf(arq, "%d; %d-%d; %d; ", novo.num, novo.mes, novo.ano, novo.lido);
+				fprintf(arq, "%d; %d-%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
 			
-			for (i = 0; i < qtd; ++i)
+			for (i = 0; i < novo.qtd; ++i)
 			{
 				fprintf(arq, "%s,", novo.pers[i]);
 			}
@@ -263,6 +262,58 @@ void remove_hq(HQ quad[200])
             printf("Quadrinho nao encontrado!\n");
 
         system("mv marvel-tmp.txt marvel-data.txt");
+	}
+
+	getchar();
+	getchar();
+
+	system("clear");
+}
+
+void busca(HQ quad[200])
+{
+	HQ busc; 
+	int i, j, ok = 0, flag, res;
+	carrega_base(quad);
+
+	printf("Digite as informações do quadrinho que deseja buscar:\n\n");
+	printf("Título:\n");
+	scanf(" %[^\n]s", busc.nome);
+	printf("Número:\n");
+	scanf("%d", &busc.num);
+
+
+	printf("\nBuscando quadrinho...\n\n");
+
+	//Verifica se existe na base de dados:
+	for (i = 0; i < 199; i++)
+	{
+		res = strcmp(busc.nome, quad[i].nome);
+		if (res == 0)
+		{
+			if (quad[i].num == busc.num)
+			{
+				flag = i;
+				ok = 1;
+				break;
+			}
+		}
+	}
+
+
+	if (ok == 0) printf("Quadrinho nao encontrado!\n");
+	else
+	{
+		printf(">> %s %d <<\n", quad[flag].nome, quad[flag].num);
+		printf("Data de publicação: %d/%d\n", quad[flag].mes, quad[flag].ano);
+		printf("Status de leitura: ");
+		if (quad[flag].lido == 0) printf("Não lido\n");
+		else if (quad[flag].lido == 1) printf("Lido\n");
+		printf("Personagens:\n");
+		for (i = 0; i < quad[flag].qtd; i++)
+		{
+			printf("-%s\n", quad[flag].pers[i]);
+		}
 	}
 
 	getchar();

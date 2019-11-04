@@ -19,6 +19,11 @@ void adiciona(HQ*);
 void remove_hq(HQ*);
 void busca(HQ*);
 void consulta(HQ*);
+void consulta1(HQ*);
+void consulta2(HQ*);
+void consulta3(HQ*);
+void consulta4(HQ*);
+void consulta5(HQ*);
 void marca_lido(HQ*);
 
 int main()
@@ -37,7 +42,7 @@ int main()
 		printf("1 - Carregar base de dados\n");
 		printf("2 - Adicionar um quadrinho\n");
 		printf("3 - Remover um quadrinho\n");
-		printf("4 - Consulta um quadrinho\n");
+		printf("4 - Consultar um quadrinho\n");
 		printf("5 - Consultas Gerais\n");
 		printf("6 - Marcar como lido:\n");
 		printf("7 - Sair​\n");
@@ -50,7 +55,7 @@ int main()
 			case 2: adiciona(quadrinhos); break;
 			case 3: remove_hq(quadrinhos); break;
 			case 4: busca(quadrinhos); break;
-			// case 5: consulta(quadrinhos); break;
+			case 5: consulta(quadrinhos); break;
 			// case 6: marca_lido(quadrinhos); break;
 			case 7: break;
 			default: printf("Opção inválida!\n");
@@ -241,10 +246,10 @@ void remove_hq(HQ quad[200])
 
 		while(fgets(linha, 1000, arq) != NULL)
 		{
-			//Leio o titulo e o numero no arquivo
+			//Le o titulo e o numero no arquivo
 			sscanf(linha, "%[^;]; %d", tit, &num);
 
-			//Se for diferente do del, copio para o novo
+			//Se for diferente do del, copia para o novo
 			if(strcmp(tit, del.nome) != 0 && num != del.num)
 				fprintf(novo, "%s", linha);
 			//Senao, informo que a remocao ocorreu
@@ -285,8 +290,8 @@ void busca(HQ quad[200])
 
 	printf("\nBuscando quadrinho...\n\n");
 
-	//Verifica se existe na base de dados:
-	for (i = 0; i < 199; i++)
+	//Verifica se existe na base de dados
+	for (i = 0; i < 200; i++)
 	{
 		res = strcmp(busc.nome, quad[i].nome);
 		if (res == 0)
@@ -320,4 +325,109 @@ void busca(HQ quad[200])
 	getchar();
 
 	system("clear");
+}
+
+void consulta(HQ quad[200])
+{
+	system("clear");
+
+	int option = 0;
+
+	carrega_base(quad);
+
+	printf("LISTAR QUADRINHOS POR: \n");
+	printf("1- Ano\n");
+	printf("2 - Período\n");
+	printf("3 - Personagem\n");
+	printf("4 - Série/Título\n");
+	printf("5 - Status de leitura\n\n");
+
+	scanf("%d", &option);
+
+	switch(option)
+	{
+		case 1: consulta1(quad); break;
+		// case 2: consulta2(quad); break;
+		// case 3: consulta3(quad); break;
+		case 4: consulta4(quad); break;
+		case 5: consulta5(quad); break;
+		default: printf("Opção inválida!\n");
+	}
+
+	getchar();
+	getchar();
+
+	system("clear");
+}
+
+void consulta1(HQ quad[200])
+{
+	int ano, i, ok = 0;
+
+	printf("Informe o ano a ser consultado:\n");
+	scanf("%d", &ano);
+
+	printf("\nBuscando quadrinhos publicados em %d...\n\n", ano);
+	//Busca os quadrinhos publicados naquele ano
+	for (i = 0; i < 200; i++)
+	{
+		if (quad[i].ano == ano)
+		{
+			printf("- %s %d\n", quad[i].nome, quad[i].num);
+			ok = 1;
+		}
+	}
+
+	if (ok == 0) printf("Nenhum quadrinho cadastrado para o ano informado\n");
+}
+
+void consulta2(HQ quad[200])
+{
+
+}
+
+void consulta3(HQ quad[200])
+{
+	char personagem[100];
+}
+void consulta4(HQ quad[200])
+{
+	char titulo[100];
+	int i, ok = 0;
+
+	printf("Informe série/título que deseja consultar:\n");
+	scanf(" %[^\n]s", titulo);
+
+	printf("\nBuscando quadrinhos de %s...\n\n", titulo);
+
+
+	for (i = 0; i < 200; i++)
+	{
+		if (strcmp(titulo, quad[i].nome) == 0)
+		{
+			printf("- %s %d\n", quad[i].nome, quad[i].num);
+			ok = 1;
+		}
+	}
+
+	if (ok == 0) printf("Nenhum quadrinho cadastrado para o parâmetro informado\n");
+}
+
+void consulta5(HQ quad[200])
+{
+	int i, ok = 0;
+
+	printf("\nBuscando quadrinhos marcados como 'lido'...\n\n");
+	
+	for (i = 0; i < 200; i++)
+	{
+		if (quad[i].lido == 1)
+		{
+			printf("- %s %d\n", quad[i].nome, quad[i].num);
+			ok = 1;
+		}
+	}
+
+	if (ok == 0) printf("Nenhum quadrinho cadastrado para parâmetro informado\n");
+
 }

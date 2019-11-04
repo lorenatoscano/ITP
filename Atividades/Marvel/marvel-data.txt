@@ -1,3 +1,5 @@
 Vingadores Guerra Infinita; 01; 06-2019; 0; 3; Hulk,Thor,Capitão América,
-Pantera cor de rosa; 34; 05-1999; 0; 1; Pantera cor de rosa,
-O Espetacular Homem-Aranha; 04; 04-2004; 0; 4; Peter Parker,Mary Jane,Tia May,Duende Verde,
+A Pantera Cor-de-rosa; 34; 05-1999; 0; 1; Pantera cor de rosa,
+O Espetacular Homem-Aranha; 04; 04-2004; 1; 4; Peter Parker,Mary Jane,Tia May,Duende Verde,
+O Espetacular Homem-Aranha; 02; 05-2000; 1; 3; Peter Parker,Mary Jane,Tia May,
+O Incrivel Hulk; 02; 11-1999; 1; 2; Hulk,Homem de Ferro,

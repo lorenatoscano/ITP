@@ -14,16 +14,16 @@ typedef struct
 } HQ;
 
 
-void carrega_base(HQ*);
+void carrega_base(HQ*, int*);
 void adiciona(HQ*);
 void remove_hq(HQ*);
 void busca(HQ*);
 void consulta(HQ*);
-void consulta1(HQ*);
-void consulta2(HQ*);
-void consulta3(HQ*);
-void consulta4(HQ*);
-void consulta5(HQ*);
+void consulta1(HQ*, int);
+void consulta2(HQ*, int);
+void consulta3(HQ*, int);
+void consulta4(HQ*, int);
+void consulta5(HQ*, int);
 void marca_lido(HQ*);
 
 int main()
@@ -31,6 +31,7 @@ int main()
 	system("clear");
 
 	int option = 0;
+	int qtd;
 	HQ* quadrinhos;
 
 	quadrinhos = calloc(200, sizeof(HQ));
@@ -51,7 +52,7 @@ int main()
 
 		switch (option)
 		{
-			case 1: carrega_base(quadrinhos); break;
+			case 1: carrega_base(quadrinhos, &qtd); break;
 			case 2: adiciona(quadrinhos); break;
 			case 3: remove_hq(quadrinhos); break;
 			case 4: busca(quadrinhos); break;
@@ -67,7 +68,7 @@ int main()
 	return 0;
 }
 
-void carrega_base(HQ quad[200])
+void carrega_base(HQ quad[200], int* n)
 {
 	system("clear");
 
@@ -114,6 +115,7 @@ void carrega_base(HQ quad[200])
 			
 			i++;
 		}
+		*n = i;
 
 		fclose(arq);
 	}
@@ -144,12 +146,12 @@ void adiciona(HQ quad[200])
 	FILE* arq = fopen("marvel-data.txt", "a");
 
 	HQ novo;
-	int i = 0, ins = 0, res, qtd;
+	int i = 0, ins = 0, res, qtd, n;
 	
 	if (arq == NULL) printf("Erro na abertura do arquivo!\n");
 	else
 	{
-		carrega_base(quad);
+		carrega_base(quad, &n);
 
 		printf("Digite as informações do quadrinho que deseja adicionar:\n\n");
 		printf("Título:\n");
@@ -158,7 +160,7 @@ void adiciona(HQ quad[200])
 		scanf("%d", &novo.num);
 
 		//Verifica se o quadrinho ja existe
-		for (i = 0; i < 200; i++)
+		for (i = 0; i < n; i++)
 		{
 			res = strcmp(novo.nome, quad[i].nome);
 			if (res == 0)
@@ -227,14 +229,14 @@ void remove_hq(HQ quad[200])
 	FILE* novo = fopen("marvel-tmp.txt", "w");
 
 	HQ del;
-	int i, ok = 0;
+	int i, ok = 0, n;
 	int num;
 	char linha[1000], tit[200];
 
 	if (arq == NULL || novo == NULL) printf("Erro na abertura do arquivo!\n");
 	else
 	{
-		carrega_base(quad);
+		carrega_base(quad, &n);
 
 		printf("Digite as informações do quadrinho que deseja remover:\n\n");
 		printf("Título:\n");
@@ -278,8 +280,8 @@ void remove_hq(HQ quad[200])
 void busca(HQ quad[200])
 {
 	HQ busc; 
-	int i, j, ok = 0, flag, res;
-	carrega_base(quad);
+	int i, j, ok = 0, flag, res, n;
+	carrega_base(quad, &n);
 
 	printf("Digite as informações do quadrinho que deseja buscar:\n\n");
 	printf("Título:\n");
@@ -291,7 +293,7 @@ void busca(HQ quad[200])
 	printf("\nBuscando quadrinho...\n\n");
 
 	//Verifica se existe na base de dados
-	for (i = 0; i < 200; i++)
+	for (i = 0; i < n; i++)
 	{
 		res = strcmp(busc.nome, quad[i].nome);
 		if (res == 0)
@@ -331,9 +333,9 @@ void consulta(HQ quad[200])
 {
 	system("clear");
 
-	int option = 0;
+	int option = 0, n;
 
-	carrega_base(quad);
+	carrega_base(quad, &n);
 
 	printf("LISTAR QUADRINHOS POR: \n");
 	printf("1- Ano\n");
@@ -346,11 +348,11 @@ void consulta(HQ quad[200])
 
 	switch(option)
 	{
-		case 1: consulta1(quad); break;
-		// case 2: consulta2(quad); break;
-		// case 3: consulta3(quad); break;
-		case 4: consulta4(quad); break;
-		case 5: consulta5(quad); break;
+		case 1: consulta1(quad, n); break;
+		// case 2: consulta2(quad, n); break;
+		// case 3: consulta3(quad, n); break;
+		case 4: consulta4(quad, n); break;
+		case 5: consulta5(quad, n); break;
 		default: printf("Opção inválida!\n");
 	}
 
@@ -360,7 +362,7 @@ void consulta(HQ quad[200])
 	system("clear");
 }
 
-void consulta1(HQ quad[200])
+void consulta1(HQ quad[200], int n)
 {
 	int ano, i, ok = 0;
 
@@ -369,7 +371,7 @@ void consulta1(HQ quad[200])
 
 	printf("\nBuscando quadrinhos publicados em %d...\n\n", ano);
 	//Busca os quadrinhos publicados naquele ano
-	for (i = 0; i < 200; i++)
+	for (i = 0; i < n; i++)
 	{
 		if (quad[i].ano == ano)
 		{
@@ -381,16 +383,17 @@ void consulta1(HQ quad[200])
 	if (ok == 0) printf("Nenhum quadrinho cadastrado para o ano informado\n");
 }
 
-void consulta2(HQ quad[200])
+void consulta2(HQ quad[200], int n)
 {
 
 }
 
-void consulta3(HQ quad[200])
+void consulta3(HQ quad[200], int n)
 {
 	char personagem[100];
 }
-void consulta4(HQ quad[200])
+
+void consulta4(HQ quad[200], int n)
 {
 	char titulo[100];
 	int i, ok = 0;
@@ -401,7 +404,7 @@ void consulta4(HQ quad[200])
 	printf("\nBuscando quadrinhos de %s...\n\n", titulo);
 
 
-	for (i = 0; i < 200; i++)
+	for (i = 0; i < n; i++)
 	{
 		if (strcmp(titulo, quad[i].nome) == 0)
 		{
@@ -413,13 +416,13 @@ void consulta4(HQ quad[200])
 	if (ok == 0) printf("Nenhum quadrinho cadastrado para o parâmetro informado\n");
 }
 
-void consulta5(HQ quad[200])
+void consulta5(HQ quad[200], int n)
 {
 	int i, ok = 0;
 
 	printf("\nBuscando quadrinhos marcados como 'lido'...\n\n");
 	
-	for (i = 0; i < 200; i++)
+	for (i = 0; i < n; i++)
 	{
 		if (quad[i].lido == 1)
 		{
@@ -429,5 +432,10 @@ void consulta5(HQ quad[200])
 	}
 
 	if (ok == 0) printf("Nenhum quadrinho cadastrado para parâmetro informado\n");
+
+}
+
+void marca_lido(HQ quad[])
+{
 
 }

@@ -331,7 +331,7 @@ void consulta(HQ quad[200])
 	switch(option)
 	{
 		case 1: consulta1(quad, n); break;
-		// case 2: consulta2(quad, n); break;
+		case 2: consulta2(quad, n); break;
 		// case 3: consulta3(quad, n); break;
 		case 4: consulta4(quad, n); break;
 		case 5: consulta5(quad, n); break;
@@ -367,6 +367,46 @@ void consulta1(HQ quad[200], int n)
 
 void consulta2(HQ quad[200], int n)
 {
+	int mi, ai, mf, af, i, ok = 0;
+
+	printf("Informe o período da sua consulta\n");
+	printf("Mês e ano iniciais (na forma mês/ano, 10/1985, por exemplo):\n");
+	scanf("%d/%d", &mi, &ai);
+	printf("Mês e o ano finais:\n");
+	scanf("%d/%d", &mf, &af);
+
+	printf("\nBuscando quadrinhos publicados de %d/%d a %d/%d...\n", mi, ai, mf, af);
+
+	for (i = 0; i < n; i++)
+	{
+		if (ai == af)
+		{
+			if(quad[i].mes >= mi && quad[i].mes <= mf)
+			{
+				printf("- %s %d\n", quad[i].nome, quad[i].num);
+				ok = 1;
+			}
+		}
+		else //Anos diferentes
+		{
+			if(quad[i].ano > ai && quad[i].ano < af)
+			{
+				printf("- %s %d\n", quad[i].nome, quad[i].num);
+				ok = 1;
+			}
+			else if(quad[i].ano == ai && quad[i].mes >= mi)
+			{
+				printf("- %s %d\n", quad[i].nome, quad[i].num);
+				ok = 1;
+			}
+			else if(quad[i].ano == af && quad[i].mes <= mf)
+			{
+				printf("- %s %d\n", quad[i].nome, quad[i].num);
+				ok = 1;
+			}
+		}
+	}
+	if (ok == 0) printf("Nenhum quadrinho cadastrado para o período informado\n");
 
 }
 

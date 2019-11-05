@@ -57,7 +57,7 @@ int main()
 			case 3: remove_hq(quadrinhos); break;
 			case 4: busca(quadrinhos); break;
 			case 5: consulta(quadrinhos); break;
-			// case 6: marca_lido(quadrinhos); break;
+			case 6: marca_lido(quadrinhos); break;
 			case 7: break;
 			default: printf("Opção inválida!\n");
 		}
@@ -119,24 +119,6 @@ void carrega_base(HQ quad[200], int* n)
 
 		fclose(arq);
 	}
-	//tam = i;
-	//Imprime os dados apenas para verificacao
-	// for(i = 0; i < tam; i++)
-	// {
-	// 	printf(">> Título da HQ %d: %s %d\n", i, quad[i].nome, quad[i].num);
-	// 	printf(">> Data: %d/%d\n", quad[i].mes, quad[i].ano);
-	// 	printf(">> Lido? %d\n", quad[i].lido);
-	
-	// 	printf(">> Personagens:\n");
-
-	// 	for (j = 0; j < quad[i].qtd; ++j)
-	// 	{
-	// 		printf("-%s\n", quad[i].pers[j]);
-	// 	}
-	// }
-
-	// getchar();
-	// getchar();
 }
 
 void adiciona(HQ quad[200])	
@@ -437,5 +419,98 @@ void consulta5(HQ quad[200], int n)
 
 void marca_lido(HQ quad[])
 {
+	system("clear");
 
+	FILE* arq = fopen("marvel-data.txt", "r");
+	FILE* novo = fopen("marvel-tmp.txt", "w");
+
+	HQ busc;
+	int i, ok = 0, n, res, flag;
+	int num;
+	char linha[1000], tit[200];
+
+	if (arq == NULL || novo == NULL) printf("Erro na abertura do arquivo!\n");
+	else
+	{
+		carrega_base(quad, &n);
+
+		printf("Digite as informações do quadrinho que deseja marcar como lido:\n\n");
+		printf("Título:\n");
+		scanf(" %[^\n]s", busc.nome);
+		printf("Número:\n");
+		scanf("%d", &busc.num);
+
+		//Verifica se o quadrinho está cadastrado e qual seu status
+		for (i = 0; i < n; i++)
+		{
+			res = strcmp(busc.nome, quad[i].nome);
+			if (res == 0)
+			{
+				if (quad[i].num == busc.num)
+				{
+					if (quad[i].lido == 1)
+					{
+						printf("Quadrinho já marcado!\n");
+						ok = -1;
+					}
+					else ok = 1;
+					
+					flag = i;
+					break;
+				}
+			}
+		}
+
+		if (ok == 0) printf("Quadrinho não encontrado!\n");
+		else if (ok == 1)
+		{
+			quad[flag].lido = 1;
+
+			while(fgets(linha, 1000, arq) != NULL)
+			{
+				//Le o titulo e o numero no arquivo
+				sscanf(linha, "%[^;]; %d", tit, &num);
+
+				//Se for igual ao que o usuario digitou, imprime as informações no arquivo com a alteração
+				if(strcmp(tit, busc.nome) == 0 && num == busc.num)
+				{
+					fprintf(novo, "%s; ", quad[flag].nome);
+
+					//Faz o tratamento para imprimir os numeros com duas casas
+					if (quad[flag].num < 10) 
+					{
+						if (quad[flag].mes < 10)
+							fprintf(novo, "0%d; 0%d-%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
+						else	
+							fprintf(novo, "0%d; %d-%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
+					}
+					else if (quad[flag].mes < 10) 
+						fprintf(novo, "%d; 0%d-%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
+					else 
+						fprintf(novo, "%d; %d-%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
+					
+					for (i = 0; i < quad[flag].qtd; ++i)
+					{
+						fprintf(novo, "%s,", quad[flag].pers[i]);
+					}
+					fprintf(novo, "\n");
+				}
+
+				//Senao, so copio a linha para o novo
+				else 
+					fprintf(novo, "%s", linha);
+			}
+
+			printf("Alteração realizada com sucesso!");
+			system("mv marvel-tmp.txt marvel-data.txt");
+		}	
+		
+		fclose(arq);
+        fclose(novo);
+	}
+
+	getchar();
+	getchar();
+
+	system("clear");
 }

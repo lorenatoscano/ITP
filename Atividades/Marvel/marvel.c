@@ -332,7 +332,7 @@ void consulta(HQ quad[200])
 	{
 		case 1: consulta1(quad, n); break;
 		case 2: consulta2(quad, n); break;
-		// case 3: consulta3(quad, n); break;
+		case 3: consulta3(quad, n); break;
 		case 4: consulta4(quad, n); break;
 		case 5: consulta5(quad, n); break;
 		default: printf("Opção inválida!\n");
@@ -413,6 +413,60 @@ void consulta2(HQ quad[200], int n)
 void consulta3(HQ quad[200], int n)
 {
 	char personagem[100];
+	HQ aux[n];
+	HQ sup;
+	int i, j, k = 0, ok = 0;
+
+	printf("Informe o personagem de deseja procurar:\n");
+	scanf(" %[^\n]s", personagem);
+
+	printf("\nBuscando quadrinhos com %s...\n", personagem);
+
+	for (i = 0; i < n; ++i)
+	{
+		for (j = 0; j < quad[i].qtd; j++)
+		{
+			if (strcmp(quad[i].pers[j], personagem) == 0)
+			{
+				aux[k] = quad[i];
+				k++;
+				ok = 1;
+			}
+		}
+	}
+	if (ok == 0) printf("Nenhum quadrinho cadastrado com o personagem informado\n");
+	else
+	{	
+		//Ordena o vetor
+		for (i = k - 1; i > 0; i--)
+		{
+			for (j = 0; j < i; j++)
+			{
+				if (aux[j].ano == aux[j + 1].ano)
+				{
+					if (aux[j].mes > aux[j + 1].mes)
+					{
+						sup = aux[j];
+						aux[j] = aux[j + 1];
+						aux[j + 1] = sup;
+					}
+				}
+
+				else if(aux[j].ano > aux[j + 1].ano)
+				{
+					sup = aux[j];
+					aux[j] = aux[j + 1];
+					aux[j + 1] = sup;
+				}
+			}
+		}
+	}
+
+	for (i = 0; i < k; i++)
+		printf("-%d/%d: %s %d\n", aux[i].mes, aux[i].ano, aux[i].nome, aux[i].num);
+
+	
+
 }
 
 void consulta4(HQ quad[200], int n)

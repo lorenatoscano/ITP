@@ -46,7 +46,7 @@ int main()
 		printf("4 - Consultar um quadrinho\n");
 		printf("5 - Consultas Gerais\n");
 		printf("6 - Marcar como lido:\n");
-		printf("7 - Sair​\n");
+		printf("7 - Sair​\n\n");
 
 		scanf("%d", &option);
 
@@ -97,7 +97,7 @@ void carrega_base(HQ quad[200], int* n)
             tail[l] = '\0';
 
             //Retira da auxiliar o restante das informacoes
-			sscanf(tail, "; %d; %d-%d; %d; %d;", &quad[i].num, &quad[i].mes, &quad[i].ano, &quad[i].lido, &quad[i].qtd);
+			sscanf(tail, "; %d; %d/%d; %d; %d;", &quad[i].num, &quad[i].mes, &quad[i].ano, &quad[i].lido, &quad[i].qtd);
 
 			//Repete o processo pra guardar o resto da linha
 			for(k=21, l = 0; tail[k] != '\0'; k++, l++)
@@ -159,8 +159,8 @@ void adiciona(HQ quad[200])
 		//Se nao foi cadastrado, le as demais informacoes
 		if (ins == 0)
 		{
-			printf("Mês e ano de publicação:\n");
-			scanf("%d %d", &novo.mes, &novo.ano);
+			printf("Mês e ano de publicação (no formato mês/ano):\n");
+			scanf("%d/%d", &novo.mes, &novo.ano);
 
 			novo.lido = 0;
 
@@ -177,14 +177,14 @@ void adiciona(HQ quad[200])
 			if (novo.num < 10) 
 			{
 				if (novo.mes < 10)
-					fprintf(arq, "0%d; 0%d-%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
+					fprintf(arq, "0%d; 0%d/%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
 				else	
-					fprintf(arq, "0%d; %d-%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
+					fprintf(arq, "0%d; %d/%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
 			}
 			else if (novo.mes < 10) 
-				fprintf(arq, "%d; 0%d-%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
+				fprintf(arq, "%d; 0%d/%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
 			else 
-				fprintf(arq, "%d; %d-%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
+				fprintf(arq, "%d; %d/%d; %d; %d; ", novo.num, novo.mes, novo.ano, novo.lido, novo.qtd);
 			
 			for (i = 0; i < novo.qtd; ++i)
 			{
@@ -463,7 +463,7 @@ void consulta3(HQ quad[200], int n)
 	}
 
 	for (i = 0; i < k; i++)
-		printf("-%d/%d: %s %d\n", aux[i].mes, aux[i].ano, aux[i].nome, aux[i].num);
+		printf("- %s %d - %d/%d\n", aux[i].nome, aux[i].num, aux[i].mes, aux[i].ano);
 
 	
 
@@ -574,14 +574,14 @@ void marca_lido(HQ quad[])
 					if (quad[flag].num < 10) 
 					{
 						if (quad[flag].mes < 10)
-							fprintf(novo, "0%d; 0%d-%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
+							fprintf(novo, "0%d; 0%d/%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
 						else	
-							fprintf(novo, "0%d; %d-%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
+							fprintf(novo, "0%d; %d/%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
 					}
 					else if (quad[flag].mes < 10) 
-						fprintf(novo, "%d; 0%d-%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
+						fprintf(novo, "%d; 0%d/%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
 					else 
-						fprintf(novo, "%d; %d-%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
+						fprintf(novo, "%d; %d/%d; %d; %d; ", quad[flag].num, quad[flag].mes, quad[flag].ano, quad[flag].lido, quad[flag].qtd);
 					
 					for (i = 0; i < quad[flag].qtd; ++i)
 					{

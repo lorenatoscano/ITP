@@ -1,3 +1,0 @@
-O Incrível Hulk; 01; 02/1930; 0; 2; Hulk,Viúva Negra,
-O Incrível Hulk; 02; 01/1940; 0; 2; Hulk,Homem de Ferro,
-Vingadores Guerra Infinita; 01; 10/1999; 0; 4; Homem de Ferro,Thor,Viúva Negra,Thanos,

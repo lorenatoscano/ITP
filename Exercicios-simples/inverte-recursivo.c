@@ -10,7 +10,7 @@ void inverte()
 
 	if (letra != '\n')
 		inverte();
-		printf("%c", letra);
+	printf("%c", letra);
 }
 
 int main()

@@ -141,14 +141,14 @@ void checa_mina(int x, int y, int** campo, char** exibicao, int** aux, int lin, 
 
 	}
 
-	//Há bombas ao redor
+	//Se tiver minas, exibe a quantidade
 	if(qtd > 0) 
 	{
 		exibicao[x][y] = qtd + '0';
 		return;
 	}
 		
-	//Abre as casas se não houver
+	//Abre as casas se não tiver
 	else if (qtd == 0)
 	{
 
@@ -192,7 +192,6 @@ void checa_mina(int x, int y, int** campo, char** exibicao, int** aux, int lin, 
 				if (!aux[x][y - 1]) checa_mina(x, y - 1, campo, exibicao, aux, lin, col);
 			}
 		}
-
 	}
 	
 

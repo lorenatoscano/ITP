@@ -72,7 +72,7 @@ void imprime_campo(int** mat, int lin, int col)
 {
 	//Apenas para verificacao
 	int i, j;
-	printf(">>Campo por debaixo dos panos:\n");
+	printf(">> Campo por debaixo dos panos:\n");
 	//Imprime a primeira linha com os numeros
 	printf("  ");
 	for(i = 1; i <= col; i++)
@@ -103,20 +103,12 @@ void imprime_campo(int** mat, int lin, int col)
 		else printf(" %d", i);
 	} 
 	printf("\n");
+	printf("\n>> Visão do usuario:\n");
 }
 
-void checa_mina(int x, int y, int** campo, char** exibicao, int lin, int col)
+void checa_mina(int x, int y, int** campo, char** exibicao, int** aux, int lin, int col)
 {
 	int i, j, qtd = 0;
-
-	//Identifica o tamanho da matriz por meio do numero maximo de bombas
-	// if (n == 10) lin = col = 9;
-	// else if (n == 40) lin = col = 16;
-	// else if (n == 99)
-	// {
-	// 	lin = 16;
-	// 	col = 30;
-	// }
 
 	//Verifica os arredores fazendo tratamento de borda
 	if (x != 0) 
@@ -137,25 +129,70 @@ void checa_mina(int x, int y, int** campo, char** exibicao, int lin, int col)
 	{
 		qtd += campo[x + 1][y];
 		if (y != col) 
+		{
 			qtd += campo[x + 1][y + 1];
+			qtd += campo[x][y + 1];
+		}
 		if (y != 0)
+		{
 			qtd += campo[x + 1][y - 1];
+			qtd += campo[x][y - 1];
+		}
+
 	}
-	
 
 	//Há bombas ao redor
 	if(qtd > 0) 
+	{
 		exibicao[x][y] = qtd + '0';
-	
+		return;
+	}
+		
 	//Abre as casas se não houver
 	else if (qtd == 0)
 	{
-		if (x > 0 && x < lin && y > 0 && y < lin)
-			for (i = x - 1; i <= x + 1; i++)
-				for (j = y - 1; j <= y + 1; j++)
-					if (exibicao[i][j] == '*')
-						exibicao[i][j] = ' ';
-		
+
+		if (exibicao[x][y] == '*')
+		{
+			exibicao[x][y] = ' ';
+		}	
+	}
+
+	//Marca essas coordenadas como verificadas
+	aux[x][y] = 1;
+	
+	if (qtd == 0)
+	{
+		//Chamada recursiva para verificar as outras casas
+		if (x != 0) 
+		{
+			if (!aux[x - 1][y]) checa_mina(x - 1, y, campo, exibicao, aux, lin, col);
+			if (y != 0)
+			{
+				if (!aux[x - 1][y - 1]) checa_mina(x - 1, y - 1, campo, exibicao, aux, lin, col);
+				if (!aux[x][y - 1]) checa_mina(x, y - 1, campo, exibicao, aux, lin, col);
+			}
+			if (y != col) 
+			{
+				if (!aux[x - 1][y + 1]) checa_mina(x - 1, y + 1, campo, exibicao, aux, lin, col);
+				if (!aux[x][y + 1]) checa_mina(x, y + 1, campo, exibicao, aux, lin, col);
+			}
+		}
+		if (x != lin) 
+		{
+			if (!aux[x + 1][y]) checa_mina(x + 1, y, campo, exibicao, aux, lin, col);
+			if (y != col)
+			{ 
+				if (!aux[x + 1][y + 1]) checa_mina(x + 1, y + 1, campo, exibicao, aux, lin, col);
+				if (!aux[x][y + 1]) checa_mina(x, y + 1, campo, exibicao, aux, lin, col);
+			}
+			if (y != 0)
+			{
+				if (!aux[x + 1][y - 1]) checa_mina(x + 1, y - 1, campo, exibicao, aux, lin, col);
+				if (!aux[x][y - 1]) checa_mina(x, y - 1, campo, exibicao, aux, lin, col);
+			}
+		}
+
 	}
 	
 

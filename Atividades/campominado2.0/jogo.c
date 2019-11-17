@@ -32,13 +32,13 @@ void jogo(int lin, int col, int bomb)
 	{
 		system("clear");
 
-		imprime_campo(campo, lin, col);
-		printf("Minas restantes: %d\n\n", bomb);
+		//imprime_campo(campo, lin, col);
+		printf("| :) | Minas restantes: %d\n", bomb);
 		//Imprime o tabuleiro para o usuario
 		imprime_tabuleiro(exibicao, lin, col);
 
 		//Le as coordenadas e a açao
-		printf("Insira as coordenadas e ação que deseja fazer: \n(A - abrir | B - colocar ou retirar bandeira)\n");
+		printf("Insira as coordenadas e a ação: \n(A - abrir | B - colocar ou retirar bandeira)\n");
 		scanf("%d %d %c", &x, &y, &action);
 		if (x > lin || y > col)
 		{

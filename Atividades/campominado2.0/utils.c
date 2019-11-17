@@ -36,6 +36,13 @@ void imprime_tabuleiro(char** mat, int lin, int col)
 {
 	int i, j;
 
+	//Separador
+	for (i = 0; i < col * 3 + 8; i++)
+	{
+		printf("=");
+	}
+	printf("\n");
+
 	//Imprime a primeira linha com os numeros
 	printf("  ");
 	for(i = 1; i <= col; i++)
@@ -45,19 +52,36 @@ void imprime_tabuleiro(char** mat, int lin, int col)
 	} 
 	printf("\n");
 
+	//Linha para organização
+	printf("   ");
+	for (i = 0; i < col * 3; i++)
+	{
+		printf("-");
+	}
+	printf("\n");
+
 	//Imprime as colunas laterais e o resto da matriz
 	for (i = 0; i < lin; ++i)
 	{
-		if (i < 9) printf("0%d  ", i+1);
-		else printf("%d  ", i+1);
+		if (i < 9) printf("0%d| ", i+1);
+		else printf("%d| ", i+1);
 
 		for (j = 0; j < col; ++j)
 			printf("%c  ", mat[i][j]);
 
-		if (i < 9) printf("0%d  ", i+1);
-		else printf("%d  ", i+1);
+		if (i < 9) printf("|0%d  ", i+1);
+		else printf("|%d  ", i+1);
 		printf("\n");
 	}
+
+	//Linha para organização
+	printf("   ");
+	for (i = 0; i < col * 3; i++)
+	{
+		printf("-");
+	}
+	printf("\n");
+
 	//Imprime a linha com os numeros
 	printf("  ");
 	for(i = 1; i <= col; i++)
@@ -67,12 +91,19 @@ void imprime_tabuleiro(char** mat, int lin, int col)
 	} 
 	printf("\n");
 
+	//Separador
+	for (i = 0; i < col * 3 + 8; i++)
+	{
+		printf("=");
+	}
+	printf("\n");
+
 }
 void imprime_campo(int** mat, int lin, int col)
 {
 	//Apenas para verificacao
 	int i, j;
-	printf(">> Campo por debaixo dos panos:\n");
+	printf("[DEBUG] Campo por debaixo dos panos:\n");
 	//Imprime a primeira linha com os numeros
 	printf("  ");
 	for(i = 1; i <= col; i++)
@@ -103,7 +134,7 @@ void imprime_campo(int** mat, int lin, int col)
 		else printf(" %d", i);
 	} 
 	printf("\n");
-	printf("\n>> Visão do usuario:\n");
+	printf("\n[DEBUG] Visão do usuario:\n");
 }
 
 void checa_mina(int x, int y, int** campo, char** exibicao, int** aux, int lin, int col)
@@ -204,9 +235,10 @@ void mostra_mina(int** campo, char** exibicao, int lin, int col)
 	int i, j;
 
 	system("clear");
-	imprime_tabuleiro(exibicao, lin, col);
 
-	printf("BOOOM! Você perdeu! :(\n\n");
+	printf("| X( |\n");
+	imprime_tabuleiro(exibicao, lin, col);
+	printf("BOOOM! Você perdeu!\n\n");
 	printf("Pressione enter para continuar\n");
 
 	getchar();
@@ -225,9 +257,9 @@ void mostra_mina(int** campo, char** exibicao, int lin, int col)
 		}
 	}
 
+	printf("| X( |\n");
 	imprime_tabuleiro(exibicao, lin, col);
 	printf("\nMais sorte na próxima!\n");
-	getchar();
 	getchar(); 
 	
 }
@@ -253,6 +285,8 @@ int verifica_vitoria(char** exibicao, int** campo, int lin, int col)
 
 	if (ganhou) 
 	{
+		printf("| B) |\n");
+		imprime_tabuleiro(exibicao, lin, col);
 		printf("PARABÉNS! VOCÊ GANHOU!");
 		return 1;
 	}

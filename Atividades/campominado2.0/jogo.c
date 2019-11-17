@@ -45,6 +45,7 @@ void jogo(int lin, int col, int bomb)
 		}
 		else
 		{
+			//Subtrai 1 dos valores para fazer a correspondência com os indices da matriz
 			switch(action)
 			{
 				case 'A':
@@ -55,7 +56,7 @@ void jogo(int lin, int col, int bomb)
 						ok = 0;
 					}	
 					else 
-						checa_mina(x - 1, y - 1, campo, exibicao, aux, lin, col);
+						checa_mina(x - 1, y - 1, campo, exibicao, aux, lin - 1, col - 1);
 					break;
 				case 'B':
 					exibicao[x - 1][y - 1] = 'B';

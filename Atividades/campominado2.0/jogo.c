@@ -5,7 +5,8 @@ void jogo(int lin, int col, int bomb)
 {
 	int** campo; //Localizacao das bombas
 	char** exibicao; //O que o jogador ve
-	int i, j, x, y, ok = 1;
+	int** aux; //Marcação dos lugares verificados
+	int i, j, x, y, ok = 1, res;
 	char action;
 
 	//Aloca as matrizes
@@ -17,6 +18,11 @@ void jogo(int lin, int col, int bomb)
 	for (i = 0; i < lin; i++)
 		exibicao[i] = malloc(sizeof(char) * col);
 
+	aux = calloc(lin, sizeof(int*));
+	for (i = 0; i < lin; i++)
+		aux[i] = calloc(col, sizeof(int));
+
+
 	//Preenche as matrizes
 	prepara_campo(campo, lin, col, bomb);
     prepara_exibicao(exibicao, lin, col);
@@ -26,7 +32,7 @@ void jogo(int lin, int col, int bomb)
 	{
 		system("clear");
 
-		//imprime_campo(campo, lin, col);
+		imprime_campo(campo, lin, col);
 		//Imprime o tabuleiro para o usuario
 		imprime_tabuleiro(exibicao, lin, col);
 
@@ -49,7 +55,7 @@ void jogo(int lin, int col, int bomb)
 						ok = 0;
 					}	
 					else 
-						checa_mina(x - 1, y - 1, campo, exibicao, lin, col);
+						checa_mina(x - 1, y - 1, campo, exibicao, aux, lin, col);
 					break;
 				case 'B':
 					exibicao[x - 1][y - 1] = 'B';

@@ -218,14 +218,43 @@ void mostra_mina(int** campo, char** exibicao, int lin, int col)
 	{
 		for (j = 0; j < col; j++)
 		{
-			if (campo[i][j]) exibicao[i][j] = 'x';
+			if (campo[i][j]) 
+				exibicao[i][j] = 'x';
+			else if (!campo[i][j] && exibicao[i][j] == 'B')
+				exibicao[i][j] = '%';
 		}
 	}
 
 	imprime_tabuleiro(exibicao, lin, col);
-	printf("Mais sorte na próxima!\n");
-	
+	printf("\nMais sorte na próxima!\n");
 	getchar();
 	getchar(); 
 	
+}
+
+int verifica_vitoria(char** exibicao, int** campo, int lin, int col)
+{
+	int ganhou = 1;
+	int i, j;
+
+	//Se alguma casa sem bomba nao foi revelada
+	for (i = 0; i < lin; i++)
+	{
+		for (j = 0; j < col; j++)
+		{
+			if (!campo[i][j] && (exibicao[i][j] == '*' || exibicao[i][j] == 'B'))
+			{
+				ganhou = 0;
+				break;
+			}
+
+		}
+	}
+
+	if (ganhou) 
+	{
+		printf("PARABÉNS! VOCÊ GANHOU!");
+		return 1;
+	}
+	else return 0;
 }

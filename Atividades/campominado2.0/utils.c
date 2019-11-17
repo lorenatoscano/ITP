@@ -236,7 +236,7 @@ void mostra_mina(int** campo, char** exibicao, int lin, int col)
 
 	system("clear");
 
-	printf("| X( |\n");
+	printf("(x_x)\n");
 	imprime_tabuleiro(exibicao, lin, col);
 	printf("BOOOM! Você perdeu!\n\n");
 	printf("Pressione enter para continuar\n");
@@ -257,9 +257,9 @@ void mostra_mina(int** campo, char** exibicao, int lin, int col)
 		}
 	}
 
-	printf("| X( |\n");
+	printf("(x_x)\n");
 	imprime_tabuleiro(exibicao, lin, col);
-	printf("\nMais sorte na próxima!\n");
+	printf("Mais sorte na próxima!\n");
 	getchar(); 
 	
 }
@@ -285,9 +285,10 @@ int verifica_vitoria(char** exibicao, int** campo, int lin, int col)
 
 	if (ganhou) 
 	{
-		printf("| B) |\n");
+		system("clear");
+		printf("(⌐■_■)\n");
 		imprime_tabuleiro(exibicao, lin, col);
-		printf("PARABÉNS! VOCÊ GANHOU!");
+		printf("PARABÉNS! VOCÊ GANHOU!\n");
 		return 1;
 	}
 	else return 0;

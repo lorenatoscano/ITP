@@ -1,5 +1,10 @@
-## campo-minado
-Joguinho simples de campo minado construído com matrizes (um dia espero tranformá-lo em algo mais decente).
+## campominado2.0
+Simulação de jogo clássico de campo minado que funciona com base em coordenadas. Evolução usando recursividade do "campominado".
+
+Esse jogo consiste em um tabuleiro, inicialmente com todas as casas “escondidas”,
+o qual o jogador deve ir clicando para revelar o conteúdo da casa. O objetivo é conseguir
+abrir todas as casas sem detonar nenhuma bomba. O jogador terá duas ações para fazer no mapa: escolher uma posição X,Y para abrir, ou escolher uma posição X,Y para marcar como bomba. Seu programa deve simular um jogo de campo minado até que o jogador consiga abrir todas as casas que não possuem bombas, ou clicar em uma bomba e ser derrotado.
+
 
 ## minipoker
 Calcula a pontuação do jogador naquela jogada com base na sequência de cartas dadas (desconsiderando os naipes).

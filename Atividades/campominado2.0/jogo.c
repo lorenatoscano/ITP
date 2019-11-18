@@ -40,7 +40,7 @@ void jogo(int lin, int col, int bomb)
 		//Le as coordenadas e a açao
 		printf("Insira as coordenadas e a ação: \n(A - abrir | B - colocar ou retirar bandeira)\n");
 		scanf("%d %d %c", &x, &y, &action);
-		if (x > lin || y > col)
+		if (x > lin || x < 1 || y < 1 || y > col)
 		{
 			printf("Valores inválidos!\n");
 			getchar();

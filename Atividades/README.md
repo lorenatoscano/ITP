@@ -1,5 +1,5 @@
 ## campominado2.0
-Simulação de jogo clássico de campo minado que funciona com base em coordenadas. Evolução usando recursividade do "campominado".
+Simulação de jogo clássico de campo minado que funciona com base em coordenadas. Evolução usando recursividade do código antigo "campominado".
 
 Esse jogo consiste em um tabuleiro, inicialmente com todas as casas “escondidas”,
 o qual o jogador deve ir clicando para revelar o conteúdo da casa. O objetivo é conseguir

@@ -139,7 +139,7 @@ void imprime_campo(int** mat, int lin, int col)
 
 void checa_mina(int x, int y, int** campo, char** exibicao, int** aux, int lin, int col)
 {
-	int i, j, qtd = 0;
+	int i, j, qtd = 0, ok1 = 0, ok2 = 0;
 
 	//Verifica os arredores fazendo tratamento de borda
 	if (x != 0) 
@@ -149,11 +149,13 @@ void checa_mina(int x, int y, int** campo, char** exibicao, int** aux, int lin, 
 		{
 			qtd += campo[x - 1][y - 1];
 			qtd += campo[x][y - 1];
+			ok1 = 1;
 		}
 		if (y != col) 
 		{
 			qtd += campo[x - 1][y + 1];
 			qtd += campo[x][y + 1];
+			ok2 = 1;
 		}
 	}
 	if (x != lin) 
@@ -162,12 +164,12 @@ void checa_mina(int x, int y, int** campo, char** exibicao, int** aux, int lin, 
 		if (y != col) 
 		{
 			qtd += campo[x + 1][y + 1];
-			qtd += campo[x][y + 1];
+			if (!ok2) qtd += campo[x][y + 1];
 		}
 		if (y != 0)
 		{
 			qtd += campo[x + 1][y - 1];
-			qtd += campo[x][y - 1];
+			if (!ok1) qtd += campo[x][y - 1];
 		}
 
 	}
@@ -224,10 +226,6 @@ void checa_mina(int x, int y, int** campo, char** exibicao, int** aux, int lin, 
 			}
 		}
 	}
-	
-
-	printf("Checando minas...\n");
-
 }
 
 void mostra_mina(int** campo, char** exibicao, int lin, int col)
@@ -250,7 +248,7 @@ void mostra_mina(int** campo, char** exibicao, int lin, int col)
 	{
 		for (j = 0; j < col; j++)
 		{
-			if (campo[i][j]) 
+			if (campo[i][j] && exibicao[i][j] != 'B') 
 				exibicao[i][j] = 'x';
 			else if (!campo[i][j] && exibicao[i][j] == 'B')
 				exibicao[i][j] = '%';

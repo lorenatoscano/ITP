@@ -32,7 +32,7 @@ void jogo(int lin, int col, int bomb)
 	{
 		system("clear");
 
-		imprime_campo(campo, lin, col);
+		// imprime_campo(campo, lin, col); //debug
 		printf("(•‿•) Minas restantes: %d\n", bomb);
 		//Imprime o tabuleiro para o usuario
 		imprime_tabuleiro(exibicao, lin, col);

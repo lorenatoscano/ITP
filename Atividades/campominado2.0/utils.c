@@ -177,7 +177,8 @@ void checa_mina(int x, int y, int** campo, char** exibicao, int** aux, int lin, 
 	//Se tiver minas, exibe a quantidade
 	if(qtd > 0) 
 	{
-		exibicao[x][y] = qtd + '0';
+		if (exibicao[x][y] == '*')
+			exibicao[x][y] = qtd + '0';
 		return;
 	}
 		
@@ -186,9 +187,7 @@ void checa_mina(int x, int y, int** campo, char** exibicao, int** aux, int lin, 
 	{
 
 		if (exibicao[x][y] == '*')
-		{
 			exibicao[x][y] = ' ';
-		}	
 	}
 
 	//Marca essas coordenadas como verificadas

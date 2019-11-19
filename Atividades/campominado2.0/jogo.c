@@ -1,4 +1,3 @@
-#include "jogo.h"
 #include "utils.h"
 
 void jogo(int lin, int col, int bomb)

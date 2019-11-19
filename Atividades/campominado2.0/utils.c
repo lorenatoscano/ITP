@@ -1,5 +1,6 @@
-#include "jogo.h"
-#include "utils.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 void prepara_campo(int** mat, int lin, int col, int n)
 {

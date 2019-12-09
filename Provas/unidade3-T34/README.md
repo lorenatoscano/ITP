@@ -29,10 +29,10 @@ criar uma biblioteca de funções que implemente o tipo de dado ​ Time ​ (ca
 as informações citadas acima) e pelo menos as duas funções utilizadas no arquivo
 principal.c:
 
--carrega_dados: uma função que lerá o arquivo de informações ​ base.txt ​ e
+* carrega_dados: uma função que lerá o arquivo de informações ​ base.txt ​ e
 retorna um vetor de Times com as informações de cada time existente no
 arquivo. Também retornará a quantidade de times lidos.
--imprime_tabela: uma função que imprimirá, para cada time, o seguinte
+* imprime_tabela: uma função que imprimirá, para cada time, o seguinte
 conjunto de informações:
 - Nome do time;
 - Pontos obtidos pelo time. Cada vitória conta 3 pontos, e empates

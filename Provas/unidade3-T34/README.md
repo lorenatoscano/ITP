@@ -11,16 +11,16 @@ professor de ITP não sabe programar, e pediu que a turma fizesse o programa.
 
 O arquivo de informações contém os dados dos times no seguinte formato:
 
-nome; vitorias empates derrotas gols_feitos gols_sofridos
+**nome; vitorias empates derrotas gols_feitos gols_sofridos**
 
 onde:
 
-Nome​ : nome do time;
+**Nome**​: nome do time;
 
-Vitorias, empates e derrotas​ : resultados das partidas jogadas. Valores
+**Vitorias, empates e derrotas​**: resultados das partidas jogadas. Valores
 inteiros.
 
-Gols Feitos e Gols sofridos​ : valores inteiros representando a quantidade de
+**Gols Feitos e Gols sofridos​**: valores inteiros representando a quantidade de
 gols que o time marcou e sofreu.
 
 Para facilitar a vida, a primeira linha do arquivo contém um valor inteiro, informando
@@ -29,24 +29,24 @@ criar uma biblioteca de funções que implemente o tipo de dado ​ Time ​ (ca
 as informações citadas acima) e pelo menos as duas funções utilizadas no arquivo
 principal.c:
 
-* carrega_dados: uma função que lerá o arquivo de informações ​ base.txt ​ e
+* **carrega_dados**: uma função que lerá o arquivo de informações ​ base.txt ​ e
 retorna um vetor de Times com as informações de cada time existente no
 arquivo. Também retornará a quantidade de times lidos.
-* imprime_tabela: uma função que imprimirá, para cada time, o seguinte
+* **imprime_tabela**: uma função que imprimirá, para cada time, o seguinte
 conjunto de informações:
-- Nome do time;
-- Pontos obtidos pelo time. Cada vitória conta 3 pontos, e empates
-contam 1 ponto;
-- Número total de partidas;
-- Número de vitórias;
-- Número de empates;
-- Número de derrotas;
-- Gols Feitos;
-- Gols Sofridos;
-- Saldo de Gols;
-- Lista dos times que estão na zona da Libertadores (6 primeiros no
-campeonato);
-- Lista dos times que estão na zona de rebaixamento (4 últimos).
+	- Nome do time;
+	- Pontos obtidos pelo time. Cada vitória conta 3 pontos, e empates
+	contam 1 ponto;
+	- Número total de partidas;
+	- Número de vitórias;
+	- Número de empates;
+	- Número de derrotas;
+	- Gols Feitos;
+	- Gols Sofridos;
+	- Saldo de Gols;
+	- Lista dos times que estão na zona da Libertadores (6 primeiros no
+	campeonato);
+	- Lista dos times que estão na zona de rebaixamento (4 últimos).
 
 A impressão deve ocorrer na ordem de classificação do campeonato. A posição dos
 times é definido em função dos seguintes critérios:

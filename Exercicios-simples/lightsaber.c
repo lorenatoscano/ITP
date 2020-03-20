@@ -4,9 +4,11 @@ int main()
 {
 	int i, j, lin, col, x = 0, y = 0;
 	int mapa[1001][1001] = {0};
-
+	
+	//Lendo o tamanho da matriz
 	scanf("%d %d", &lin, &col);
-
+	
+	//Lendo toda a matriz
 	for (i = 1; i <= lin; ++i)
 	{
 		for (j = 1; j <= col; ++j)
@@ -14,7 +16,8 @@ int main()
 			scanf("%d", &mapa[i][j]);
 		}
 	}
-
+	
+	//Analisando os elementos da matriz
 	for (i = 2; i < lin; ++i)
 	{
 		for (j = 2; j < col; ++j)
